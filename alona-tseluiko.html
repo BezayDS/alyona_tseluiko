@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Альона Целуйко — Жива музика для вашого свята</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --plum: #2D1B3D;
+    --deep: #1A0F2E;
+    --violet: #6B3FA0;
+    --lavender: #9B72CF;
+    --lilac: #C9A8E8;
+    --gold: #D4A853;
+    --gold-light: #F0D090;
+    --cream: #F7F0EC;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--deep);
+    color: var(--cream);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.35;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(26,15,46,0.95) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--lilac);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 10px 24px 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(107,63,160,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(155,114,207,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 80% 20%, rgba(212,168,83,0.08) 0%, transparent 60%),
+      var(--deep);
+  }
+
+  /* Floating orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    animation: floatOrb 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .orb-1 {
+    width: 400px; height: 400px;
+    background: rgba(107,63,160,0.2);
+    top: -100px; left: -100px;
+    animation-delay: 0s;
+  }
+  .orb-2 {
+    width: 300px; height: 300px;
+    background: rgba(212,168,83,0.1);
+    bottom: 0; right: -50px;
+    animation-delay: -3s;
+  }
+  .orb-3 {
+    width: 200px; height: 200px;
+    background: rgba(155,114,207,0.15);
+    top: 40%; left: 60%;
+    animation-delay: -5s;
+  }
+
+  @keyframes floatOrb {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.05); }
+    66% { transform: translate(-20px, 15px) scale(0.95); }
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.5s;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--lilac);
+    margin-top: 20px;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.7s;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 32px auto;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.9s;
+  }
+
+  .hero-desc {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: rgba(247,240,236,0.7);
+    letter-spacing: 0.05em;
+    max-width: 480px;
+    margin: 0 auto 40px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 1.1s;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 16px 48px;
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 1.3s;
+  }
+
+  .hero-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+    z-index: -1;
+  }
+
+  .hero-cta:hover { color: var(--deep); }
+  .hero-cta:hover::before { transform: translateX(0); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(201,168,232,0.5);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: fadeIn 1s ease forwards 2s, bounce 2s ease-in-out infinite 2s;
+    opacity: 0;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--lavender), transparent);
+    display: block;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* ── SECTIONS ── */
+  section { position: relative; }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 48px;
+  }
+
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    display: inline-block;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 48px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--lilac);
+  }
+
+  /* ── ABOUT ── */
+  .about-bg {
+    background: linear-gradient(135deg, rgba(45,27,61,0.6) 0%, rgba(26,15,46,0.9) 100%);
+    border-top: 1px solid rgba(107,63,160,0.2);
+    border-bottom: 1px solid rgba(107,63,160,0.2);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-photo-wrap {
+    position: relative;
+  }
+
+  .about-photo-placeholder {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, rgba(107,63,160,0.3), rgba(45,27,61,0.8));
+    border: 1px solid rgba(201,168,232,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: rgba(201,168,232,0.4);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-photo-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 30%, rgba(212,168,83,0.1), transparent 60%);
+  }
+
+  .photo-icon {
+    font-size: 3rem;
+    opacity: 0.3;
+  }
+
+  .about-photo-wrap::after {
+    content: '';
+    position: absolute;
+    top: 20px; left: 20px;
+    right: -20px; bottom: -20px;
+    border: 1px solid rgba(212,168,83,0.2);
+    z-index: -1;
+  }
+
+  .about-text p {
+    font-size: 0.9rem;
+    line-height: 2;
+    color: rgba(247,240,236,0.75);
+    margin-bottom: 24px;
+    letter-spacing: 0.03em;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(107,63,160,0.3);
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(201,168,232,0.6);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ── SERVICES ── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .service-card {
+    padding: 48px 36px;
+    background: rgba(45,27,61,0.4);
+    border: 1px solid rgba(107,63,160,0.15);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .service-card:hover {
+    background: rgba(107,63,160,0.15);
+    transform: translateY(-4px);
+  }
+
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 0.78rem;
+    line-height: 1.8;
+    color: rgba(247,240,236,0.6);
+    letter-spacing: 0.03em;
+  }
+
+  /* ── VIDEO ── */
+  .video-bg {
+    background: var(--plum);
+    border-top: 1px solid rgba(107,63,160,0.2);
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .video-item {
+    position: relative;
+    background: rgba(26,15,46,0.8);
+    border: 1px solid rgba(107,63,160,0.2);
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .video-item:hover { border-color: rgba(212,168,83,0.4); }
+
+  /* Instagram embed placeholder */
+  .video-placeholder {
+    aspect-ratio: 9/16;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, rgba(107,63,160,0.15), rgba(26,15,46,0.9));
+    color: rgba(201,168,232,0.5);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+  }
+
+  .video-placeholder-icon { font-size: 2.5rem; opacity: 0.4; }
+
+  .video-caption {
+    padding: 16px 20px;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: rgba(201,168,232,0.6);
+    text-transform: uppercase;
+    border-top: 1px solid rgba(107,63,160,0.2);
+  }
+
+  .video-note {
+    margin-top: 40px;
+    padding: 24px 32px;
+    background: rgba(107,63,160,0.1);
+    border: 1px solid rgba(107,63,160,0.2);
+    border-left: 3px solid var(--gold);
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: rgba(247,240,236,0.7);
+  }
+
+  .video-note strong {
+    color: var(--gold-light);
+    font-weight: 500;
+  }
+
+  /* ── GALLERY ── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    gap: 8px;
+    margin-top: 60px;
+  }
+
+  .gallery-item {
+    background: linear-gradient(135deg, rgba(107,63,160,0.2), rgba(45,27,61,0.8));
+    border: 1px solid rgba(107,63,160,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(201,168,232,0.35);
+    overflow: hidden;
+    transition: all 0.4s;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .gallery-item:hover img { transform: scale(1.05); }
+
+  .gallery-item:hover {
+    border-color: rgba(212,168,83,0.3);
+  }
+
+  .gallery-item:nth-child(1) { grid-row: span 2; aspect-ratio: unset; min-height: 320px; }
+  .gallery-item:nth-child(5) { grid-column: span 2; }
+  .gallery-item:not(:nth-child(1)):not(:nth-child(5)) { aspect-ratio: 1; }
+
+  .gallery-placeholder-text {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    inset: 0;
+  }
+
+  /* ── EQUIPMENT ── */
+  .equipment-bg {
+    background: linear-gradient(180deg, var(--deep) 0%, rgba(45,27,61,0.5) 50%, var(--deep) 100%);
+    border-top: 1px solid rgba(107,63,160,0.2);
+  }
+
+  .equipment-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .equip-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: rgba(45,27,61,0.5);
+    border: 1px solid rgba(107,63,160,0.15);
+    font-size: 0.8rem;
+    color: rgba(247,240,236,0.7);
+    letter-spacing: 0.05em;
+  }
+
+  .equip-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── CONTACT ── */
+  .contact-bg {
+    background: linear-gradient(135deg, rgba(45,27,61,0.8) 0%, var(--deep) 100%);
+    border-top: 1px solid rgba(107,63,160,0.3);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-sub{
+    color: inherit
+  }
+
+  .contact-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 32px;
+  }
+
+  .contact-headline em {
+    color: var(--gold-light);
+    font-style: italic;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: rgba(107,63,160,0.1);
+    border: 1px solid rgba(107,63,160,0.2);
+    text-decoration: none;
+    color: var(--cream);
+    transition: all 0.3s;
+  }
+
+  .contact-link:hover {
+    background: rgba(107,63,160,0.25);
+    border-color: var(--gold);
+    transform: translateX(4px);
+  }
+
+  .contact-link-icon { font-size: 1.2rem; }
+
+  .contact-link-text { font-size: 0.8rem; letter-spacing: 0.05em; }
+  .contact-link-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(201,168,232,0.5);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+  .form-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(201,168,232,0.6);
+  }
+
+  .form-input, .form-textarea {
+    background: rgba(45,27,61,0.6);
+    border: 1px solid rgba(107,63,160,0.3);
+    color: var(--cream);
+    padding: 14px 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--gold);
+  }
+
+  .form-input::placeholder, .form-textarea::placeholder {
+    color: rgba(201,168,232,0.3);
+    font-size: 0.8rem;
+  }
+
+  .form-textarea { resize: vertical; min-height: 120px; }
+
+  .form-submit {
+    padding: 16px 40px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s;
+    align-self: flex-start;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .form-submit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+    z-index: -1;
+  }
+
+  .form-submit:hover { color: var(--deep); }
+  .form-submit:hover::before { transform: translateX(0); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 48px;
+    border-top: 1px solid rgba(107,63,160,0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--gold-light);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+  }
+
+  .footer-copy {
+    font-size: 0.65rem;
+    color: rgba(201,168,232,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .section-inner { padding: 70px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .about-photo-wrap::after { display: none; }
+    .services-grid { grid-template-columns: 1fr; gap: 2px; }
+    .video-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item:nth-child(1) { grid-row: span 1; min-height: 200px; }
+    .gallery-item:nth-child(5) { grid-column: span 1; }
+    .equipment-list { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    footer { flex-direction: column; text-align: center; }
+    .about-stats { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#" class="nav-logo">Альона Целуйко</a>
+  <ul class="nav-links">
+    <li><a href="#about">Про мене</a></li>
+    <li><a href="#services">Послуги</a></li>
+    <li><a href="#video">Відео</a></li>
+    <li><a href="#gallery">Галерея</a></li>
+    <li><a href="#contact">Контакт</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Живий вокал · Жива музика</p>
+    <h1 class="hero-name">Альона<br><em>Целуйко</em></h1>
+    <p class="hero-tagline">Музика, яка залишається у серці</p>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">Атмосфера вашого свята починається зі звуку. Жива музика для весіль, банкетів, корпоративів та вечірніх заходів.</p>
+    <a href="#contact" class="hero-cta">Замовити виступ</a>
+  </div>
+  <div class="scroll-hint">Гортати</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-bg">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-photo-wrap">
+        <!-- ЗАМІНІТЬ: вставте тег <img src="ваше-фото.jpg" alt="Альона Целуйко"> замість блоку нижче -->
+        <div class="about-photo-placeholder" style="background:none">
+          <div class="photo-icon">🎤</div>
+          <span>Ваше фото тут</span>
+          <span style="font-size:0.6rem; opacity:0.5"><img src="main_photo.jpg" alt="Альона Целуйко" style="width:100%; height:100%; object-fit:cover; object-position:center top; position:relative; z-index:2;"></span>
+        </div>
+      </div>
+      <div class="about-text">
+        <p class="section-label">Про мене</p>
+        <h2 class="section-title">Голос, який<br><em>створює магію</em></h2>
+        <!-- ЗАМІНІТЬ: текст нижче на реальний опис Альони -->
+        <p>Альона Целуйко — вокалістка з багаторічним досвідом виступів на кращих майданчиках міста. Її репертуар поєднує найкращі зразки української естради та міжнародні хіти, створюючи неповторну атмосферу вашого вечора.</p>
+        <p>Кожен виступ — це живе відчуття, яке неможливо відтворити у записі. Власна якісна апаратура дозволяє забезпечити бездоганне звучання на будь-якому майданчику.</p>
+        <div class="about-stats">
+          <div>
+            <span class="stat-num">10+</span>
+            <!-- ЗАМІНІТЬ цифри на реальні -->
+            <span class="stat-label">Років досвіду</span>
+          </div>
+          <!-- <div> -->
+            <!-- <span class="stat-num">200+</span> -->
+            <!-- <span class="stat-label">Заходів</span> -->
+          <!-- </div> -->
+          <div>
+            <span class="stat-num">100%</span>
+            <span class="stat-label">Живий звук</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <p class="section-label">Послуги</p>
+    <h2 class="section-title">Для кожного<br><em>особливого моменту</em></h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">💍</span>
+        <h3 class="service-title">Весілля</h3>
+        <p class="service-desc">Жива музика для церемонії та банкету. Романтичний настрій, перший танець, вечірня програма — ваш день звучить ідеально.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🥂</span>
+        <h3 class="service-title">Банкети та урочистості</h3>
+        <p class="service-desc">Ювілеї, корпоративи, вечірки — жива музика перетворює звичайний захід на незабутній вечір.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🍷</span>
+        <h3 class="service-title">Ресторани та заходи</h3>
+        <p class="service-desc">Регулярні виступи в ресторані, приватні вечори, tête-à-tête — живий вокал для особливої атмосфери.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section id="video" class="video-bg">
+  <div class="section-inner">
+    <p class="section-label">Відео</p>
+    <h2 class="section-title">Почуйте<br><em>живий звук</em></h2>
+    <div class="video-grid">
+      <!-- ЗАМІНІТЬ: замість плейсхолдерів вставте embed-код з Instagram або TikTok -->
+      <!-- Приклад для Instagram: скопіюйте embed-код з поста і вставте сюди -->
+      <div class="video-item">
+        <iframe src="https://www.instagram.com/reel/DU1MOS3CjOF/embed/" 
+          width="100%" 
+          style="aspect-ratio:9/16; border:none; background:#000;"
+          allowfullscreen>
+        </iframe>
+        <div class="video-caption">Лірично</div>
+      </div>
+      <div class="video-item">
+        <iframe src="https://www.instagram.com/reel/DUODeORCu_d/embed/" 
+          width="100%" 
+          style="aspect-ratio:9/16; border:none; background:#000;"
+          allowfullscreen>
+        </iframe>
+        <div class="video-caption">Драйвово</div>
+      </div>
+    </div>
+    <div class="video-note">
+      <strong>Більше відео</strong> — Підписуйтесь на <a href="https://www.instagram.com/alya_michelle" target="_blank" rel="noopener noreferrer" class="contact-sub">Instagram</a> та 
+      <a href="https://www.tiktok.com/@alya_michelle" target="_blank" rel="noopener noreferrer" class="contact-sub">TikTok</a>, щоб бачити виступи наживо та нові записи щотижня..
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-inner">
+    <p class="section-label">Галерея</p>
+    <h2 class="section-title">Моменти<br><em>живої музики</em></h2>
+    <div class="gallery-grid">
+      <!-- ЗАМІНІТЬ: <img src="фото1.jpg" alt="опис"> замість кожного плейсхолдера -->
+      <div class="gallery-item">
+        <div class="gallery-placeholder-text">
+          <span style="font-size:2rem;opacity:0.2">📸</span>
+          <span>Фото 1</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder-text">
+          <span style="font-size:2rem;opacity:0.2">📸</span>
+          <span>Фото 2</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder-text">
+          <span style="font-size:2rem;opacity:0.2">📸</span>
+          <span>Фото 3</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder-text">
+          <span style="font-size:2rem;opacity:0.2">📸</span>
+          <span>Фото 4</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder-text">
+          <span style="font-size:2rem;opacity:0.2">📸</span>
+          <span>Фото 5</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder-text">
+          <span style="font-size:2rem;opacity:0.2">📸</span>
+          <span>Фото 6</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPMENT -->
+<section class="equipment-bg">
+  <div class="section-inner" style="padding-top:60px; padding-bottom:60px;">
+    <p class="section-label">Технічне забезпечення</p>
+    <h2 class="section-title" style="margin-bottom:8px;">Власна професійна<br><em>апаратура</em></h2>
+    <p style="font-size:0.85rem; color:rgba(247,240,236,0.55); margin-bottom:0; line-height:1.8;">Не потрібно орендувати обладнання — все вже є.</p>
+    <!-- <div class="equipment-list"> -->
+      <!-- ЗАМІНІТЬ: додайте або приберіть пункти зі своєю реальною апаратурою -->
+      <!-- <div class="equip-item"><span class="equip-dot"></span>Професійна звукова система RCF</div> -->
+      <!-- <div class="equip-item"><span class="equip-dot"></span>Бездротовий мікрофон SHURE</div> -->
+      <!-- <div class="equip-item"><span class="equip-dot"></span>Мікшерний пульт RCF</div> -->
+      <!-- <div class="equip-item"><span class="equip-dot"></span>Підзвучення для залів</div> -->
+    <!-- </div> -->
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-bg">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div>
+        <p class="section-label">Контакт</p>
+        <h2 class="contact-headline">Обговоримо ваше<br><em>свято?</em></h2>
+        <p style="font-size:0.85rem; line-height:1.9; color:rgba(247,240,236,0.6); margin-bottom:40px; letter-spacing:0.03em;">Напишіть або зателефонуйте — розкажіть про ваш захід, дату та побажання. Відповідаю швидко.</p>
+        <div class="contact-links">
+          <!-- ЗАМІНІТЬ номер телефону та посилання на Instagram/TikTok -->
+          <a href="tel:+380991333027" class="contact-link">
+            <span class="contact-link-icon">📞</span>
+            <div class="contact-link-text">
+              <span class="contact-link-label">Телефон / Viber / Telegram</span>
+              +38 (099) 133-30-27
+            </div>
+          </a>
+          <a href="https://www.instagram.com/alya_michelle/" target="_blank" class="contact-link">
+            <span class="contact-link-icon">📸</span>
+            <div class="contact-link-text">
+              <span class="contact-link-label">Instagram</span>
+              @alya_michelle
+            </div>
+          </a>
+          <a href="https://www.tiktok.com/@alya_michelle" target="_blank" class="contact-link">
+            <span class="contact-link-icon">🎵</span>
+            <div class="contact-link-text">
+              <span class="contact-link-label">TikTok</span>
+              @alya_michelle
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form" action="https://formspree.io/f/xrevpgkr" method="POST">
+          <div class="form-group">
+            <label class="form-label">Ваше ім'я</label>
+            <input type="text" class="form-input" placeholder="Як до вас звертатись?">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Телефон або Instagram</label>
+            <input type="text" class="form-input" placeholder="+38 (0XX) XXX-XX-XX">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Захід і дата</label>
+            <input type="text" class="form-input" placeholder="Весілля, 15 серпня 2025">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Повідомлення</label>
+            <textarea class="form-textarea" placeholder="Розкажіть про ваш захід..."></textarea>
+          </div>
+          <!-- УВАГА: форма потребує підключення сервісу для відправки (наприклад, Formspree.io — безкоштовно) -->
+          <!-- Замініть action="https://formspree.io/f/ВАШ_ID" і додайте method="POST" якщо потрібно -->
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button type="button" class="form-submit" onclick="sendToTelegram()">✈ Telegram</button>
+            <button type="button" class="form-submit" style="border-color:var(--lavender); color:var(--lilac);" onclick="sendToEmail()">✉ Email</button>
+          </div>
+          <p style="font-size:0.65rem; color:rgba(201,168,232,0.35); letter-spacing:0.05em;">* Форма є декоративною. Підключіть Formspree або замініть на посилання у WhatsApp/Telegram</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function sendToTelegram() {
+  const fields = document.querySelectorAll('.form-input, .form-textarea');
+  const name = fields[0].value.trim();
+  const contact = fields[1].value.trim();
+  const event = fields[2].value.trim();
+  const message = fields[3].value.trim();
+
+  if (!name || !contact) {
+    alert("Будь ласка, заповніть ім'я та контакт");
+    return;
+  }
+
+  const text = `👋 Нова заявка з сайту!\n\n` +
+    `👤 Ім'я: ${name}\n` +
+    `📱 Контакт: ${contact}\n` +
+    `🎉 Захід: ${event || 'не вказано'}\n` +
+    `💬 Повідомлення: ${message || 'не вказано'}`;
+
+    window.open(`https://t.me/Alya_michelle?text=${encodeURIComponent(text)}`, '_blank');
+}
+
+async function sendToEmail() {
+  const fields = document.querySelectorAll('.form-input, .form-textarea');
+  const name = fields[0].value.trim();
+  const contact = fields[1].value.trim();
+  const event = fields[2].value.trim();
+  const message = fields[3].value.trim();
+
+  if (!name || !contact) {
+    alert("Будь ласка, заповніть ім'я та контакт");
+    return;
+  }
+
+  const res = await fetch('https://formspree.io/f/xrevpgkr', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, contact, event, message })
+  });
+
+  if (res.ok) {
+    alert('✅ Заявку надіслано! Відповімо найближчим часом.');
+    fields.forEach(f => f.value = '');
+  } else {
+    alert('❌ Помилка. Спробуйте написати напряму в Telegram.');
+  }
+}
+</script>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Альона Целуйко</span>
+  <span class="footer-copy">© 2025 · Живий вокал · Жива музика</span>
+</footer>
+
+</body>
+</html>
