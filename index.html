@@ -1377,7 +1377,11 @@
         `🎉 Захід: ${event || 'не вказано'}\n` +
         `💬 Повідомлення: ${message || 'не вказано'}`;
 
-      window.open(`viber://chat?number=%2B380991333027&text=${encodeURIComponent(text)}`, '_blank');
+      const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+      const viberUrl = isMobile
+        ? `viber://chat?number=%2B380991333027&text=${encodeURIComponent(text)}`
+        : `viber://chat?number=%2B380991333027`;
+      window.open(viberUrl, '_blank');
     }
 
   </script>
