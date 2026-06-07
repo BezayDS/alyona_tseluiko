@@ -90,7 +90,9 @@
       list-style: none;
     }
 
-    .burger { display: flex; }
+    .burger {
+      display: flex;
+    }
 
     .nav-links a {
       color: var(--lilac);
@@ -1326,7 +1328,7 @@
             <div style="display:flex; gap:12px; flex-wrap:wrap;">
               <button type="button" class="form-submit" onclick="sendToTelegram()">✈ Telegram</button>
               <button type="button" class="form-submit" style="border-color:var(--lavender); color:var(--lilac);"
-                onclick="sendToEmail()">✉ Email</button>
+                onclick="sendToViber()">📲 Viber</button>
             </div>
             <p style="font-size:0.65rem; color:rgba(201,168,232,0.35); letter-spacing:0.05em;">* Форма є декоративною.
               Підключіть Formspree або замініть на посилання у WhatsApp/Telegram</p>
@@ -1357,8 +1359,7 @@
 
       window.open(`https://t.me/Alya_michelle?text=${encodeURIComponent(text)}`, '_blank');
     }
-
-    async function sendToEmail() {
+    function sendToViber() {
       const fields = document.querySelectorAll('.form-input, .form-textarea');
       const name = fields[0].value.trim();
       const contact = fields[1].value.trim();
@@ -1370,19 +1371,15 @@
         return;
       }
 
-      const res = await fetch('https://formspree.io/f/xrevpgkr', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, contact, event, message })
-      });
+      const text = `👋 Нова заявка з сайту!\n\n` +
+        `👤 Ім'я: ${name}\n` +
+        `📱 Контакт: ${contact}\n` +
+        `🎉 Захід: ${event || 'не вказано'}\n` +
+        `💬 Повідомлення: ${message || 'не вказано'}`;
 
-      if (res.ok) {
-        alert('✅ Заявку надіслано! Відповімо найближчим часом.');
-        fields.forEach(f => f.value = '');
-      } else {
-        alert('❌ Помилка. Спробуйте написати напряму в Telegram.');
-      }
+      window.open(`viber://chat?number=%2B380991333027&text=${encodeURIComponent(text)}`, '_blank');
     }
+
   </script>
 
   <!-- FOOTER -->
