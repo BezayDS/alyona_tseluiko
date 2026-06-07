@@ -67,7 +67,7 @@
       top: 0;
       left: 0;
       right: 0;
-      z-index: 300;
+      z-index: 100;
       padding: 24px 48px;
       display: flex;
       justify-content: space-between;
@@ -85,13 +85,9 @@
     }
 
     .nav-links {
-      display: none;
+      display: flex;
       gap: 36px;
       list-style: none;
-    }
-
-    .burger {
-      display: flex;
     }
 
     .nav-links a {
@@ -882,74 +878,6 @@
         display: none;
       }
 
-      .burger {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-        padding: 4px;
-        z-index: 200;
-      }
-
-      .burger span {
-        display: block;
-        width: 24px;
-        height: 2px;
-        background: var(--gold-light);
-        transition: all 0.3s ease;
-      }
-
-      .burger.open span:nth-child(1) {
-        transform: translateY(7px) rotate(45deg);
-      }
-
-      .burger.open span:nth-child(2) {
-        opacity: 0;
-      }
-
-      .burger.open span:nth-child(3) {
-        transform: translateY(-7px) rotate(-45deg);
-      }
-
-      .mobile-menu {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(26, 15, 46, 0.98);
-        z-index: 150;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 40px;
-      }
-
-      .mobile-menu.open {
-        display: flex;
-      }
-
-      .mobile-menu a {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 2rem;
-        font-weight: 300;
-        color: var(--cream);
-        text-decoration: none;
-        letter-spacing: 0.1em;
-        transition: color 0.3s;
-      }
-
-      .mobile-menu a:hover {
-        color: var(--gold-light);
-      }
-
-      @media (max-width: 768px) {
-        .burger {
-          display: flex;
-        }
-      }
-
       .section-inner {
         padding: 70px 24px;
       }
@@ -976,15 +904,6 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .gallery-item:nth-child(1) {
-        grid-row: span 1;
-        min-height: 200px;
-      }
-
-      .gallery-item:nth-child(5) {
-        grid-column: span 1;
-      }
-
       .equipment-list {
         grid-template-columns: 1fr;
       }
@@ -1002,14 +921,7 @@
       .about-stats {
         grid-template-columns: repeat(3, 1fr);
       }
-
-      input[type="date"]::-webkit-calendar-picker-indicator {
-        filter: invert(1) brightness(0.7) sepia(1) hue-rotate(220deg);
-        cursor: pointer;
-      }
     }
-
-
 
     /* LIGHTBOX */
     .lightbox-overlay {
@@ -1044,6 +956,17 @@
       line-height: 1;
     }
   </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TV36Z51W8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-TV36Z51W8N');
+  </script>
+
 </head>
 
 <body>
@@ -1058,21 +981,7 @@
       <li><a href="#gallery">Галерея</a></li>
       <li><a href="#contact">Контакт</a></li>
     </ul>
-
-    <div class="burger" id="burger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
   </nav>
-  </div>
-
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#about" onclick="closeMenu()">Про мене</a>
-    <a href="#services" onclick="closeMenu()">Послуги</a>
-    <a href="#video" onclick="closeMenu()">Відео</a>
-    <a href="#gallery" onclick="closeMenu()">Галерея</a>
-    <a href="#contact" onclick="closeMenu()">Контакт</a>
-  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -1099,8 +1008,6 @@
         <div class="about-photo-wrap">
           <!-- ЗАМІНІТЬ: вставте тег <img src="ваше-фото.jpg" alt="Альона Целуйко"> замість блоку нижче -->
           <div class="about-photo-placeholder" style="background:none">
-
-
             <img src="main_photo.jpg" alt="Альона Целуйко"
               style="width:100%; height:100%; object-fit:cover; object-position:center top;">
           </div>
@@ -1200,7 +1107,7 @@
         <strong>Більше відео</strong> — Підписуйтесь на <a href="https://www.instagram.com/alya_michelle"
           target="_blank" rel="noopener noreferrer" class="contact-sub">Instagram</a> та
         <a href="https://www.tiktok.com/@alya_michelle" target="_blank" rel="noopener noreferrer"
-          class="contact-sub">TikTok</a>, щоб бачити виступи наживо та нові записи щотижня..
+          class="contact-sub">TikTok</a>, щоб бачити виступи наживо та нові записи щотижня.
       </div>
     </div>
   </section>
@@ -1316,8 +1223,8 @@
               <input type="text" class="form-input" placeholder="+38 (0XX) XXX-XX-XX">
             </div>
             <div class="form-group">
-              <label class="form-label">Дата</label>
-              <input type="date" class="form-input" min="2025-01-01">
+              <label class="form-label">Захід і дата</label>
+              <input type="text" class="form-input" placeholder="Весілля, 15 серпня 2025">
             </div>
             <div class="form-group">
               <label class="form-label">Повідомлення</label>
@@ -1327,11 +1234,17 @@
             <!-- Замініть action="https://formspree.io/f/ВАШ_ID" і додайте method="POST" якщо потрібно -->
             <div style="display:flex; gap:12px; flex-wrap:wrap;">
               <button type="button" class="form-submit" onclick="sendToTelegram()">✈ Telegram</button>
-              <button type="button" class="form-submit" style="border-color:var(--lavender); color:var(--lilac);"
-                onclick="sendToViber()">📲 Viber</button>
+              <button type="button" class="form-submit" style="border-color:#25D366; color:#25D366;"
+                onclick="sendToWhatsApp()">💬 WhatsApp</button>
             </div>
-            <p style="font-size:0.65rem; color:rgba(201,168,232,0.35); letter-spacing:0.05em;">* Форма є декоративною.
-              Підключіть Formspree або замініть на посилання у WhatsApp/Telegram</p>
+            <div style="margin-top:16px; padding-top:16px; border-top:1px solid rgba(107,63,160,0.2);">
+              <p
+                style="font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(201,168,232,0.4); margin-bottom:12px;">
+                Або напишіть напряму</p>
+              <a href="#" onclick="openViber()" class="form-submit"
+                style="display:inline-block; text-decoration:none; border-color:rgba(107,63,160,0.4); color:rgba(201,168,232,0.6);">📲
+                Viber</a>
+            </div>
           </div>
         </div>
       </div>
@@ -1359,7 +1272,8 @@
 
       window.open(`https://t.me/Alya_michelle?text=${encodeURIComponent(text)}`, '_blank');
     }
-    function sendToViber() {
+
+    function sendToWhatsApp() {
       const fields = document.querySelectorAll('.form-input, .form-textarea');
       const name = fields[0].value.trim();
       const contact = fields[1].value.trim();
@@ -1377,13 +1291,12 @@
         `🎉 Захід: ${event || 'не вказано'}\n` +
         `💬 Повідомлення: ${message || 'не вказано'}`;
 
-      const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
-      const viberUrl = isMobile
-        ? `viber://chat?number=%2B380991333027&text=${encodeURIComponent(text)}`
-        : `viber://chat?number=%2B380991333027`;
-      window.open(viberUrl, '_blank');
+      window.open(`https://wa.me/380991333027?text=${encodeURIComponent(text)}`, '_blank');
     }
 
+    function openViber() {
+      window.open('viber://chat?number=%2B380991333027', '_blank');
+    }
   </script>
 
   <!-- FOOTER -->
@@ -1411,17 +1324,6 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeLightbox();
     });
-
-    function toggleMenu() {
-      document.getElementById('burger').classList.toggle('open');
-      document.getElementById('mobileMenu').classList.toggle('open');
-      document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
-    }
-    function closeMenu() {
-      document.getElementById('burger').classList.remove('open');
-      document.getElementById('mobileMenu').classList.remove('open');
-      document.body.style.overflow = '';
-    }
   </script>
 </body>
 
