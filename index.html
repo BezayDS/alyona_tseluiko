@@ -960,6 +960,80 @@
       filter: invert(1) brightness(0.7) sepia(1) hue-rotate(220deg);
       cursor: pointer;
     }
+
+    /* ── BURGER MENU ── */
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 400;
+      position: relative;
+    }
+
+    .burger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold-light);
+      transition: all 0.3s ease;
+    }
+
+    .burger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .burger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(26, 15, 46, 0.98);
+      z-index: 300;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.3s;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--gold-light);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        z-index: 400;
+      }
+
+      .burger {
+        display: flex;
+      }
+    }
   </style>
 
   <!-- Google tag (gtag.js) -->
@@ -986,6 +1060,20 @@
       <li><a href="#gallery">Галерея</a></li>
       <li><a href="#contact">Контакт</a></li>
     </ul>
+    <div class="burger" id="burger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" onclick="closeMenu()">Про мене</a>
+      <a href="#services" onclick="closeMenu()">Послуги</a>
+      <a href="#video" onclick="closeMenu()">Відео</a>
+      <a href="#gallery" onclick="closeMenu()">Галерея</a>
+      <a href="#contact" onclick="closeMenu()">Контакт</a>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -1061,7 +1149,8 @@
         <div class="service-card">
           <span class="service-icon">🥂</span>
           <h3 class="service-title">Банкети та урочистості</h3>
-          <p class="service-desc">Дні народження, корпоративи, вечірки — жива музика перетворює звичайний захід на незабутній
+          <p class="service-desc">Дні народження, корпоративи, вечірки — жива музика перетворює звичайний захід на
+            незабутній
             вечір.</p>
         </div>
         <div class="service-card">
@@ -1304,6 +1393,19 @@
     function openViber() {
       window.open('viber://chat?number=%2B380991333027', '_blank');
     }
+
+
+    function toggleMenu() {
+      document.getElementById('burger').classList.toggle('open');
+      document.getElementById('mobileMenu').classList.toggle('open');
+      document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
+    }
+    function closeMenu() {
+      document.getElementById('burger').classList.remove('open');
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
   </script>
 
   <!-- FOOTER -->
